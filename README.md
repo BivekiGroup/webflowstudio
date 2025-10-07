@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WebFlow Studio
 
-## Getting Started
+Маркетинговый лендинг и прототип панели управления для WebFlow Studio. Проект использует Next.js App Router, кастомные shadcn/ui-компоненты и Prisma для работы с PostgreSQL.
 
-First, run the development server:
+## Требования
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js 18+ (рекомендуется 20 LTS)
+- PostgreSQL 14+ с доступной базой данных
+- npm (или другой совместимый пакетный менеджер)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Быстрый старт
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Скопируйте файл окружения и пропишите параметры подключения к базе:
+   ```bash
+   cp .env.example .env
+   # DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DB_NAME
+   ```
+2. Установите зависимости:
+   ```bash
+   npm install
+   ```
+3. Примените Prisma-модель и сгенерируйте клиент:
+   ```bash
+   npx prisma migrate dev --name init-auth
+   # или, если миграции применять нельзя, выполните
+   npx prisma db push
+   npx prisma generate
+   ```
+4. Запустите dev-сервер:
+   ```bash
+   npm run dev
+   ```
+5. Откройте [http://localhost:3000](http://localhost:3000) чтобы увидеть сайт.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Реализованные фичи авторизации
 
-## Learn More
+- Регистрация с проверкой пароля (минимум 8 символов) и автоматическим созданием сессии.
+- Авторизация по email/паролю с хешированием `bcryptjs`.
+- Серверные сессии на Prisma (`User` ↔ `Session`) и http-only cookie с автоудалением по истечению срока.
+- Страницы `/login`, `/register` и защищённый `/dashboard` с выходом.
+- Динамическая навигация на главной: кнопки входа/регистрации или приветствие с переходом в панель.
 
-To learn more about Next.js, take a look at the following resources:
+## Структура
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `prisma/schema.prisma` — схема БД (таблицы `User`, `Session`).
+- `src/lib/prisma.ts` — singleton-клиент Prisma.
+- `src/lib/auth.ts` — серверные хелперы: hash/verify, управление сессиями, `getCurrentUser`.
+- `src/app/(auth)` — формы входа/регистрации, серверные экшены и общий UI-компонент формы.
+- `src/app/dashboard` — защищённая панель.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Дальнейшие шаги
 
-## Deploy on Vercel
+- Добавить валидацию на основе `zod` и полноценные сообщения об ошибках форм.
+- Подключить отправку писем (reset password / verify email).
+- Интегрировать OAuth/SSO, если понадобится внешняя авторизация.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# webflowstudio
