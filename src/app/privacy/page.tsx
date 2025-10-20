@@ -28,7 +28,7 @@ export default function PrivacyPage() {
       <p>
         Расчётный счёт: <strong>40802810820000749783</strong>
         <br />
-        Название банка: <strong>ООО "Банк Точка"</strong>
+        Название банка: <strong>ООО &quot;Банк Точка&quot;</strong>
         <br />
         БИК: <strong>044525104</strong>
         <br />

@@ -11,7 +11,7 @@ export function DesktopOnlyWrapper({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     // Детект мобильного устройства
     const checkIfMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+      const userAgent = navigator.userAgent || navigator.vendor || '';
       const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
       const isMobileDevice = mobileRegex.test(userAgent);
       const isSmallScreen = window.innerWidth < 1024; // < lg breakpoint
