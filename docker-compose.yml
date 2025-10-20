@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webflowstudio
+    restart: unless-stopped
+    ports:
+      - "3024:3000"
+    environment:
+      # Database connection (DBaaS)
+      - DATABASE_URL=${DATABASE_URL}
+
+      # Node environment
+      - NODE_ENV=production
+
+      # Next.js settings
+      - NEXT_TELEMETRY_DISABLED=1
+      - HOSTNAME=0.0.0.0
+      - PORT=3000
+
+      # Optional: если нужны дополнительные переменные
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3000}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+
+    # Healthcheck для проверки работоспособности
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/api/health || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Логирование
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # Метки для удобства
+    labels:
+      - "com.webflowstudio.description=WebFlow Studio main application"
+      - "com.webflowstudio.version=1.0.0"
+
+# Сети (опционально, если нужна изоляция)
+networks:
+  default:
+    name: webflowstudio_network

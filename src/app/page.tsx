@@ -5,549 +5,637 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Accordion } from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
 import { getCurrentUser } from "@/lib/auth";
 import { logoutAction } from "@/app/(auth)/actions";
-import { Database, GitMerge, Layers, Rocket, Sparkles } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import {
+  Wand2,
+  Workflow,
+  Zap,
+  Code2,
+  Palette,
+  Server,
+  ArrowRight,
+  Check,
+  Sparkles,
+  Layout,
+  Blocks,
+  Globe,
+  Database,
+  GitBranch
+} from "lucide-react";
 
 const features = [
   {
-    title: "Компонентные блоки",
+    icon: Palette,
+    title: "Визуальный редактор",
     description:
-      "Перетаскивайте авторизацию, панели, таблицы данных и готовые лендинги. WebFlow Studio сам простроит структуру.",
-    metric: "140+ готовых компонентов",
+      "Создавайте дизайн сайта перетаскиванием блоков. Никакого кода — только ваше видение и креатив.",
+    gradient: "from-purple-500/20 to-pink-500/20",
   },
   {
-    title: "Продакшн-код без доработок",
+    icon: Workflow,
+    title: "Блок-схемы логики",
     description:
-      "Экспортируйте аккуратные React и shadcn/ui компоненты или синхронизируйте проект с GitHub за один клик.",
-    metric: "0 лишних зависимостей",
+      "Настраивайте поведение сайта через визуальные блок-схемы. Обработка форм, интеграции, условия — всё наглядно.",
+    gradient: "from-blue-500/20 to-cyan-500/20",
   },
   {
-    title: "Совместная работа",
+    icon: Server,
+    title: "Подключение API",
     description:
-      "Комментируйте логику, закрепляйте блоки и утверждайте hand-off в одном окне вместе с командой.",
-    metric: "История версий и комментарии",
-  },
-];
-
-const workflow = [
-  {
-    stage: "Соберите",
-    title: "Схематизируйте сценарии drag-and-drop",
-    description:
-      "Используйте быстрые горячие клавиши, умное выравнивание и адаптивные брейкпоинты, которые подстраиваются автоматически.",
+      "Привязывайте готовые REST и GraphQL API. Интеграция с внешними сервисами и облачными базами данных.",
+    gradient: "from-emerald-500/20 to-green-500/20",
   },
   {
-    stage: "Соедините",
-    title: "Подключите данные за пару минут",
-    description:
-      "Привяжите REST или GraphQL, настройте моковые состояния и авторизацию не покидая холст.",
-  },
-  {
-    stage: "Запустите",
-    title: "Сгенерируйте код, который примут в ревью",
-    description:
-      "Посмотрите готовые хуки, серверные экшены и токены Tailwind перед экспортом.",
-  },
-];
-
-type HeroHighlight = {
-  label: string;
-  value: string;
-  description: string;
-};
-
-type HeroStage = {
-  slot: string;
-  title: string;
-  summary: string;
-  icon: LucideIcon;
-  tasks: string[];
-};
-
-type HeroLogItem = {
-  label: string;
-  detail: string;
-  icon: LucideIcon;
-};
-
-const heroHighlights: HeroHighlight[] = [
-  {
-    label: "Time-to-ship",
-    value: "72 ч",
-    description: "От брифа до production-ветки без ручной верстки.",
-  },
-  {
-    label: "Команды",
-    value: "12",
-    description: "Пилотных продуктовых групп уже мигрировали в Studio.",
-  },
-  {
-    label: "UI-токены",
-    value: "180+",
-    description: "Готовых паттернов и пресетов с типизацией.",
-  },
-];
-
-const heroStages: HeroStage[] = [
-  {
-    slot: "09:30",
-    title: "Brief sync",
-    summary: "Продакт скидывает сценарий и макет. Studio разбивает фичу на секции и связывает с задачами.",
-    icon: Layers,
-    tasks: [
-      "Импорт схемы из Figma и Notion",
-      "Автонастройка брейкпоинтов",
-    ],
-  },
-  {
-    slot: "13:10",
-    title: "Data wiring",
-    summary: "Привязываем REST/GraphQL, генерируем типы и моковые состояния для демо.",
     icon: Database,
-    tasks: [
-      "Заполнены state-пресеты",
-      "Прописаны guards и auth",
-    ],
+    title: "Работа с данными",
+    description:
+      "Подключайте облачные базы данных: Firebase, Supabase, PostgreSQL. Настраивайте через визуальный интерфейс.",
+    gradient: "from-violet-500/20 to-purple-500/20",
   },
   {
-    slot: "18:40",
-    title: "Code ready",
-    summary: "Pull request собирается автоматически: описания, проверка тестов и предпросмотр в Vercel.",
-    icon: GitMerge,
-    tasks: [
-      "CI зелёный",
-      "Линтер и визуальные тесты пройдены",
-    ],
+    icon: Code2,
+    title: "Экспорт production-кода",
+    description:
+      "Скачивайте готовый React/Next.js проект. Чистый код с TypeScript, готовый к деплою на любой платформе.",
+    gradient: "from-orange-500/20 to-red-500/20",
+  },
+  {
+    icon: Zap,
+    title: "Готовые компоненты",
+    description:
+      "Библиотека из 100+ UI-компонентов и шаблонов. Формы, таблицы, графики, авторизация — всё готово к использованию.",
+    gradient: "from-slate-500/20 to-zinc-500/20",
   },
 ];
 
-const heroLog: HeroLogItem[] = [
+const useCases = [
   {
-    label: "Design",
-    detail: "Передал обновленный UI-kit, токены применены ко всем блокам.",
-    icon: Sparkles,
+    title: "Лендинги с формами",
+    description: "Создавайте посадочные страницы с автоматической обработкой лидов, интеграцией с CRM и email-уведомлениями.",
+    icon: Layout,
   },
   {
-    label: "Backend",
-    detail: "Подтвердил схемы GraphQL, загружены моковые ответы для QA.",
+    title: "Веб-приложения",
+    description: "Стройте полноценные SaaS-сервисы с авторизацией, базой данных и сложной бизнес-логикой.",
+    icon: Blocks,
+  },
+  {
+    title: "Порталы и каталоги",
+    description: "Разворачивайте контент-платформы, каталоги товаров и информационные порталы за считанные дни.",
+    icon: Globe,
+  },
+];
+
+const howItWorks = [
+  {
+    step: "01",
+    title: "Дизайн интерфейса",
+    description: "Соберите страницы из готовых блоков или создайте свои. Адаптивность настраивается автоматически.",
+    icon: Palette,
+  },
+  {
+    step: "02",
+    title: "Настройка логики",
+    description: "Нарисуйте блок-схему: что происходит при отправке формы, как обрабатываются данные, куда идут уведомления.",
+    icon: GitBranch,
+  },
+  {
+    step: "03",
+    title: "Подключение данных",
+    description: "Свяжите с вашим API или облачной базой данных. Интегрируйте внешние сервисы через готовые коннекторы.",
     icon: Database,
   },
   {
-    label: "Release",
-    detail: "PR #412 отправлен, предпросмотр в Vercel доступен для продукта.",
-    icon: Rocket,
+    step: "04",
+    title: "Экспорт и деплой",
+    description: "Скачайте готовый проект и разверните на любой платформе: Vercel, Netlify, собственный сервер.",
+    icon: Code2,
   },
 ];
 
-const faqs = [
+const pricing = [
   {
-    id: "pricing",
-    title: "Сколько стоит WebFlow Studio?",
-    content:
-      "На период закрытой беты доступ бесплатный. После релиза появится тариф для команд и свободный план для соло-разработчиков.",
+    name: "Starter",
+    price: "Бесплатно",
+    description: "Для личных проектов и экспериментов",
+    features: [
+      "1 проект",
+      "Базовые блоки и компоненты",
+      "Экспорт кода проекта",
+      "Подключение облачных БД",
+      "Базовые интеграции",
+    ],
   },
   {
-    id: "code",
-    title: "Как выглядит сгенерированный код?",
-    content:
-      "Мы экспортируем чистые React-компоненты с Tailwind и shadcn/ui. Структура повторяет библиотеку вашего дизайна и поддерживает TypeScript.",
+    name: "Pro",
+    price: "1 990 ₽",
+    period: "/мес",
+    description: "Для профессиональных сайтов",
+    features: [
+      "5 проектов",
+      "Все блоки и шаблоны",
+      "Продвинутые блок-схемы",
+      "Все интеграции (API, БД)",
+      "Экспорт с TypeScript",
+      "Приоритетная поддержка",
+    ],
+    popular: true,
   },
   {
-    id: "collaboration",
-    title: "Можно ли работать всей командой?",
-    content:
-      "Конечно. Добавляйте дизайнеров, продуктов и QA, чтобы оставлять комментарии, фиксировать секции и утверждать ревью.",
-  },
-  {
-    id: "data",
-    title: "Поддерживается ли подключение к реальным данным?",
-    content:
-      "Подключайте REST, GraphQL или используйте встроенные моковые данные. Для популярных CRM подготовлены пресеты.",
+    name: "Team",
+    price: "4 990 ₽",
+    period: "/мес",
+    description: "Для команд и агентств",
+    features: [
+      "Безлимитные проекты",
+      "Всё из Pro",
+      "Совместная работа",
+      "Кастомные компоненты",
+      "API для автоматизации",
+      "Выделенная поддержка",
+      "SLA 99.9%",
+    ],
   },
 ];
 
 export default async function Home() {
   const user = await getCurrentUser();
 
-  const linkButtonBase =
-    "inline-flex items-center justify-center rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-500 disabled:pointer-events-none disabled:opacity-60 h-11 px-5 py-2 text-sm font-medium";
-  const outlineLinkButton = cn(
-    linkButtonBase,
-    "border border-slate-700 text-slate-200 hover:bg-slate-800",
-  );
-  const primaryLinkButton = cn(
-    linkButtonBase,
-    "bg-emerald-500 text-white hover:bg-emerald-400 shadow-sm shadow-emerald-500/30",
-  );
-
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_55%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.08),_transparent_50%)]" />
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
 
-      <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-24 px-6 pb-24 pt-16 sm:pt-20 lg:px-12">
-        <header className="flex flex-col gap-6">
-          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
+          <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
-              <span className="text-lg font-semibold text-white">WebFlow Studio</span>
-              <Badge variant="default">Закрытая бета</Badge>
+              <Sparkles className="h-6 w-6 text-emerald-400" />
+              <span className="text-xl font-bold text-white">WebFlow Studio</span>
+              <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-300">
+                Beta
+              </Badge>
             </div>
-            <div className="flex flex-col items-start gap-3 text-sm text-slate-400 sm:items-end">
-              <div className="flex flex-wrap items-center gap-3">
-                <span>
-                  Создано компанией {" "}
-                  <a
-                    href="https://biveki.ru"
-                    className="text-slate-200 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-300"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Biveki
-                  </a>
-                </span>
-                <Separator className="hidden h-6 w-px sm:block" />
-                <Link className="hover:text-slate-100" href="#workflow">
-                  Документация
+            <div className="hidden h-6 w-px bg-white/10 sm:block" />
+            <a
+              href="https://biveki.ru"
+              target="_blank"
+              rel="noreferrer"
+              className="hidden text-sm text-slate-400 transition-colors hover:text-slate-300 sm:block"
+            >
+              by <span className="font-medium text-slate-300">Biveki</span>
+            </a>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <div className="hidden items-center gap-6 text-sm font-medium text-slate-300 md:flex">
+              <Link className="transition-colors hover:text-white" href="#features">
+                Возможности
+              </Link>
+              <Link className="transition-colors hover:text-white" href="#how-it-works">
+                Как работает
+              </Link>
+              <Link className="transition-colors hover:text-white" href="#pricing">
+                Тарифы
+              </Link>
+            </div>
+
+            <div className="h-6 w-px bg-white/10" />
+
+            {user ? (
+              <div className="flex items-center gap-3">
+                <Link href="/dashboard">
+                  <Button variant="outline" size="sm" className="border-slate-700 hover:bg-slate-800">
+                    Панель управления
+                  </Button>
                 </Link>
-                <Separator className="hidden h-6 w-px sm:block" />
-                <Link className="hover:text-slate-100" href="#faq">
-                  Вопросы
-                </Link>
+                <form action={logoutAction}>
+                  <Button type="submit" variant="ghost" size="sm" className="text-slate-300 hover:text-white">
+                    Выйти
+                  </Button>
+                </form>
               </div>
-              {user ? (
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="hidden text-slate-400 sm:inline">
-                    Вы вошли как {user.name ?? user.email}
-                  </span>
-                  <Link href="/dashboard" className={outlineLinkButton}>
-                    Панель
-                  </Link>
-                  <form action={logoutAction}>
-                    <Button
-                      type="submit"
-                      variant="ghost"
-                      size="sm"
-                      className="text-slate-200 hover:text-white"
-                    >
-                      Выйти
-                    </Button>
-                  </form>
-                </div>
-              ) : (
-                <div className="flex flex-wrap items-center gap-2">
-                  <Link href="/login" className={outlineLinkButton}>
+            ) : (
+              <div className="flex items-center gap-3">
+                <Link href="/login">
+                  <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white">
                     Войти
-                  </Link>
-                  <Link href="/register" className={primaryLinkButton}>
-                    Регистрация
-                  </Link>
-                </div>
-              )}
-            </div>
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button size="sm" className="bg-emerald-500 hover:bg-emerald-400">
+                    Начать бесплатно
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
+        </div>
+      </nav>
 
-          <section className="relative grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <div className="space-y-10">
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="outline" className="border-emerald-500/40 text-emerald-200">
-                  WebFlow Studio 2.0
-                </Badge>
-                <span className="rounded-full border border-emerald-500/30 px-3 py-1 text-xs font-medium uppercase tracking-[0.24em] text-emerald-200/80">
-                  Mission control
-                </span>
-              </div>
-              <div className="space-y-6">
-                <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-[56px]">
-                  Нарисовали продукт — значит, он почти в проде.
-                </h1>
-                <p className="text-lg text-slate-300">
-                  WebFlow Studio превращает бриф, макет и API в живой сервис с готовым кодом. Продуктовые команды запускают фичи без ожидания фронт-команды и ручной сборки интерфейсов.
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button size="lg">Запросить пилот</Button>
-                <Button variant="ghost" size="lg" className="text-slate-200 hover:text-white">
-                  Live-тур по продукту
+      <main className="relative">
+        <section className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <Badge variant="outline" className="mb-8 border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-emerald-300">
+              <Wand2 className="mr-2 inline h-3.5 w-3.5" />
+              Визуальная разработка нового поколения
+            </Badge>
+
+            <h1 className="mb-8 bg-gradient-to-br from-white via-white to-white/60 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl lg:text-7xl">
+              Создавайте функциональные сайты
+              <span className="block bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text">без написания кода</span>
+            </h1>
+
+            <p className="mb-12 text-xl leading-relaxed text-slate-300 sm:text-2xl">
+              Визуальный редактор для дизайна + блок-схемы для логики.
+              <br />
+              Привязывайте бэкенд или используйте встроенную базу данных.
+            </p>
+
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link href="/register">
+                <Button size="lg" className="h-12 bg-emerald-500 px-8 text-base hover:bg-emerald-400">
+                  Начать бесплатно
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
+              </Link>
+              <Link href="#how-it-works">
+                <Button size="lg" variant="outline" className="h-12 border-slate-700 px-8 text-base hover:bg-slate-800">
+                  Как это работает
+                </Button>
+              </Link>
+            </div>
+
+            <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-slate-400">
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-emerald-400" />
+                Готов за 5 минут
               </div>
-              <div className="grid gap-4 text-sm text-slate-300 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-2xl">
-                {heroHighlights.map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-2xl border border-slate-800/60 bg-slate-950/70 p-5"
-                  >
-                    <p className="text-xs uppercase tracking-[0.3em] text-emerald-200/80">
-                      {item.label}
-                    </p>
-                    <p className="mt-2 text-3xl font-semibold text-white">{item.value}</p>
-                    <p className="mt-1 text-slate-400">{item.description}</p>
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-emerald-400" />
+                Бесплатный план навсегда
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-emerald-400" />
+                Экспорт чистого кода
+              </div>
+            </div>
+          </div>
+
+          <div className="relative mx-auto mt-24 max-w-5xl">
+            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 blur-3xl" />
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/80 p-8 shadow-2xl backdrop-blur-sm">
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="flex gap-2">
+                    <div className="h-3 w-3 rounded-full bg-red-500/80" />
+                    <div className="h-3 w-3 rounded-full bg-yellow-500/80" />
+                    <div className="h-3 w-3 rounded-full bg-green-500/80" />
                   </div>
-                ))}
-              </div>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
-                <span className="font-medium text-slate-200">Уже в пилоте:</span>
-                <span>Shiftly</span>
-                <span>NimbusPay</span>
-                <span>RevoOps</span>
-              </div>
-            </div>
-
-            <Card className="relative overflow-hidden border-emerald-500/25 bg-slate-950/85 p-8 shadow-2xl shadow-emerald-500/20">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.18),_transparent_58%)]" />
-              <div className="pointer-events-none absolute -bottom-20 right-0 h-48 w-48 rounded-full bg-sky-500/20 blur-3xl" />
-              <CardHeader className="relative space-y-2">
-                <div className="flex items-center gap-2 text-emerald-200">
-                  <Sparkles className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-200/80">
-                    Control room
-                  </span>
+                  <div className="flex-1 rounded-lg bg-slate-800/50 px-4 py-2 text-sm text-slate-400">
+                    webflowstudio.ru/editor
+                  </div>
                 </div>
-                <CardTitle className="text-2xl font-semibold text-white">Сборка фичи за день</CardTitle>
-                <CardDescription className="text-sm text-slate-300">
-                  Последний пилот: из брифа до влитого pull request — один рабочий день. Команда видит весь прогресс синхронно.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative space-y-6">
-                <div className="space-y-4">
-                  {heroStages.map((stage) => {
-                    const Icon = stage.icon;
-
-                    return (
-                      <div
-                        key={stage.slot}
-                        className="rounded-2xl border border-slate-800/60 bg-slate-950/70 p-4"
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="space-y-1">
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-emerald-200/70">
-                              {stage.slot}
-                            </p>
-                            <p className="text-sm font-medium text-white">{stage.title}</p>
-                            <p className="text-xs text-slate-300">{stage.summary}</p>
-                          </div>
-                          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-200">
-                            <Icon className="h-5 w-5" />
-                          </div>
-                        </div>
-                        <ul className="mt-3 space-y-1 text-xs text-slate-400">
-                          {stage.tasks.map((task) => (
-                            <li key={task} className="flex items-center gap-2">
-                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                              {task}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    );
-                  })}
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 p-6">
+                    <Palette className="mb-4 h-10 w-10 text-emerald-400" />
+                    <h3 className="mb-2 font-semibold text-white">Визуальный редактор</h3>
+                    <p className="text-sm text-slate-400">Drag & drop интерфейс для создания дизайна</p>
+                  </div>
+                  <div className="rounded-xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 p-6">
+                    <Workflow className="mb-4 h-10 w-10 text-cyan-400" />
+                    <h3 className="mb-2 font-semibold text-white">Блок-схемы логики</h3>
+                    <p className="text-sm text-slate-400">Настройка поведения без программирования</p>
+                  </div>
                 </div>
-                <Separator className="border-emerald-500/20" />
-                <div className="space-y-3 text-xs text-slate-300">
-                  {heroLog.map((entry) => {
-                    const Icon = entry.icon;
-
-                    return (
-                      <div
-                        key={entry.label}
-                        className="flex items-start justify-between gap-4 rounded-2xl border border-slate-800/70 bg-slate-950/70 p-3"
-                      >
-                        <div>
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-200/70">
-                            {entry.label}
-                          </p>
-                          <p className="mt-1 text-slate-300">{entry.detail}</p>
-                        </div>
-                        <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-200">
-                          <Icon className="h-4 w-4" />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-              <CardFooter className="relative flex items-center justify-between rounded-2xl border border-emerald-500/20 bg-slate-950/70 px-4 py-3 text-xs text-slate-300">
-                <span className="font-medium text-slate-200">Nightly build</span>
-                <span className="text-emerald-300">Автодеплой завершится через 12 мин</span>
-              </CardFooter>
-            </Card>
-          </section>
-        </header>
-
-        <section className="grid gap-6 lg:grid-cols-3">
-          {features.map((feature) => (
-            <Card key={feature.title} className="border-slate-800/60 bg-slate-950/70">
-              <CardHeader>
-                <CardTitle className="text-xl text-white">{feature.title}</CardTitle>
-                <CardDescription className="text-slate-300">
-                  {feature.description}
-                </CardDescription>
-              </CardHeader>
-              <CardFooter className="text-sm text-emerald-300">
-                {feature.metric}
-              </CardFooter>
-            </Card>
-          ))}
-        </section>
-
-        <section
-          id="workflow"
-          className="grid gap-8 rounded-3xl border border-emerald-500/30 bg-slate-950/80 p-10 shadow-emerald-500/10 lg:grid-cols-[0.9fr_1.1fr]"
-        >
-          <div className="space-y-6">
-            <Badge variant="outline" className="border-emerald-500/40 text-emerald-200">
-              Воркфлоу
-            </Badge>
-            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-              Один поток от прототипа до pull request.
-            </h2>
-            <p className="text-slate-300">
-              WebFlow Studio поддерживает непрерывную цепочку: визуальное проектирование → настройка данных → экспорт кода. На каждой стадии сохраняется контекст и комментарии команды.
-            </p>
-          </div>
-          <div className="grid gap-4">
-            {workflow.map((step) => (
-              <Card key={step.stage} className="border-slate-800/60 bg-slate-950/60">
-                <CardContent className="gap-3">
-                  <Badge variant="soft" className="w-fit text-slate-500">
-                    {step.stage}
-                  </Badge>
-                  <h3 className="text-lg font-semibold text-white">{step.title}</h3>
-                  <p className="text-sm text-slate-300">{step.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        <section id="integrations" className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <div className="space-y-6">
-            <Badge variant="outline" className="border-emerald-500/40 text-emerald-200">
-              Интеграции
-            </Badge>
-            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-              Любимые сервисы уже внутри.
-            </h2>
-            <p className="text-slate-300">
-              Подключайте GitHub, Vercel, Linear, Slack и другие инструменты. WebFlow Studio формирует ветки, комментирует задачи и готовит демо-ссылки для ревью.
-            </p>
-            <div className="grid gap-3 text-sm text-slate-300 sm:grid-cols-2">
-              <div className="rounded-2xl border border-slate-800/50 bg-slate-950/60 px-5 py-4">
-                <p className="font-medium text-white">GitHub Actions</p>
-                <p className="mt-1 text-slate-400">Готовые CI-сценарии для React, Next.js и Remix</p>
-              </div>
-              <div className="rounded-2xl border border-slate-800/50 bg-slate-950/60 px-5 py-4">
-                <p className="font-medium text-white">Дизайн-токены</p>
-                <p className="mt-1 text-slate-400">Импорт переменных и стилей из Figma</p>
-              </div>
-              <div className="rounded-2xl border border-slate-800/50 bg-slate-950/60 px-5 py-4">
-                <p className="font-medium text-white">Уведомления в Slack</p>
-                <p className="mt-1 text-slate-400">Апдейты о прогрессе и комментариях в каналах</p>
-              </div>
-              <div className="rounded-2xl border border-slate-800/50 bg-slate-950/60 px-5 py-4">
-                <p className="font-medium text-white">Storybook</p>
-                <p className="mt-1 text-slate-400">Экспорт примеров прямо в каталог</p>
               </div>
             </div>
           </div>
-          <Card className="border-emerald-500/30 bg-slate-950/80 p-8">
-            <CardHeader>
-              <CardTitle className="text-xl text-white">Автогенерация pull request</CardTitle>
-              <CardDescription className="text-slate-300">
-                WebFlow Studio собирает PR, проверяет линтеры и готовит описание релиза.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="gap-4 text-sm">
-              <div className="space-y-2 rounded-2xl border border-emerald-500/20 bg-slate-900/70 p-4">
-                <p className="font-mono text-emerald-200">feat: launch analytics hub</p>
-                <p className="text-slate-300">
-                  - добавлен onboarding flow
-                  <br />- подключен GraphQL endpoint
-                  <br />- созданы тестовые данные для QA
-                </p>
-              </div>
-              <p className="text-slate-400">
-                После мерджа WebFlow Studio обновит дизайн-токены, синхронизирует Storybook и отправит уведомления команде.
-              </p>
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" className="border-emerald-500/40 text-white hover:text-emerald-200">
-                Посмотреть процесс
-              </Button>
-            </CardFooter>
-          </Card>
         </section>
 
-        <section
-          id="faq"
-          className="grid gap-8 rounded-3xl border border-slate-800/60 bg-slate-950/80 p-10 lg:grid-cols-[0.9fr_1.1fr]"
-        >
-          <div className="space-y-6">
-            <Badge variant="outline" className="border-emerald-500/40 text-emerald-200">
-              Вопросы
-            </Badge>
-            <h2 className="text-3xl font-semibold text-white sm:text-4xl">
-              Частые вопросы команд.
-            </h2>
-            <p className="text-slate-300">
-              Не нашли ответ? Напишите нам — поможем подключить команду и настроить пайплайн.
-            </p>
-          </div>
-          <Accordion items={faqs} defaultOpenId="pricing" className="max-w-2xl" />
-        </section>
-
-        <section className="rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/20 via-slate-950 to-slate-950 p-10 text-white">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div className="space-y-4 max-w-xl">
-              <h2 className="text-3xl font-semibold sm:text-4xl">
-                Присоединяйтесь к закрытой бете WebFlow Studio.
+        <section id="features" className="border-y border-white/5 bg-slate-900/50 py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <Badge variant="outline" className="mb-4 border-emerald-500/40 bg-emerald-500/10 text-emerald-300">
+                Возможности
+              </Badge>
+              <h2 className="mb-6 text-4xl font-bold text-white sm:text-5xl">
+                Всё для создания современных веб-приложений
               </h2>
-              <p className="text-slate-200">
-                Получите ранний доступ к новому уровню визуальной разработки и сэкономьте недели на hand-off.
+              <p className="text-lg text-slate-400">
+                Объединили лучшее от конструкторов сайтов и платформ автоматизации
               </p>
             </div>
-            <form className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
-              <div className="w-full">
+
+            <div className="mx-auto mt-16 grid max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <Card
+                    key={feature.title}
+                    className="group relative overflow-hidden border-white/10 bg-slate-900/50 backdrop-blur-sm transition-all hover:border-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/10"
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 transition-opacity group-hover:opacity-100`} />
+                    <CardHeader className="relative">
+                      <div className="mb-4 inline-flex rounded-xl bg-slate-800/50 p-3">
+                        <Icon className="h-6 w-6 text-emerald-400" />
+                      </div>
+                      <CardTitle className="text-xl text-white">{feature.title}</CardTitle>
+                      <CardDescription className="text-slate-400">
+                        {feature.description}
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="how-it-works" className="py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <Badge variant="outline" className="mb-4 border-cyan-500/40 bg-cyan-500/10 text-cyan-300">
+                Как это работает
+              </Badge>
+              <h2 className="mb-6 text-4xl font-bold text-white sm:text-5xl">
+                От идеи до запуска за 4 простых шага
+              </h2>
+              <p className="text-lg text-slate-400">
+                Никаких сложных настроек — всё интуитивно и наглядно
+              </p>
+            </div>
+
+            <div className="mx-auto mt-16 max-w-4xl space-y-12">
+              {howItWorks.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.step} className="relative flex gap-8">
+                    {index !== howItWorks.length - 1 && (
+                      <div className="absolute left-8 top-20 h-full w-px bg-gradient-to-b from-emerald-500/50 to-transparent" />
+                    )}
+                    <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 backdrop-blur-sm">
+                      <Icon className="h-7 w-7 text-emerald-400" />
+                      <div className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500 text-xs font-bold text-slate-950">
+                        {item.step}
+                      </div>
+                    </div>
+                    <div className="flex-1 pb-12">
+                      <h3 className="mb-3 text-2xl font-bold text-white">{item.title}</h3>
+                      <p className="text-lg leading-relaxed text-slate-400">{item.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-white/5 bg-slate-900/50 py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <Badge variant="outline" className="mb-4 border-purple-500/40 bg-purple-500/10 text-purple-300">
+                Примеры использования
+              </Badge>
+              <h2 className="mb-6 text-4xl font-bold text-white sm:text-5xl">
+                Что можно создать
+              </h2>
+              <p className="text-lg text-slate-400">
+                От простых лендингов до сложных веб-приложений
+              </p>
+            </div>
+
+            <div className="mx-auto mt-16 grid max-w-5xl gap-8 lg:grid-cols-3">
+              {useCases.map((useCase) => {
+                const Icon = useCase.icon;
+                return (
+                  <Card
+                    key={useCase.title}
+                    className="border-white/10 bg-slate-900/50 backdrop-blur-sm transition-all hover:border-purple-500/30 hover:shadow-xl hover:shadow-purple-500/10"
+                  >
+                    <CardHeader>
+                      <div className="mb-4 inline-flex rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 p-4">
+                        <Icon className="h-8 w-8 text-purple-400" />
+                      </div>
+                      <CardTitle className="text-xl text-white">{useCase.title}</CardTitle>
+                      <CardDescription className="text-slate-400">
+                        {useCase.description}
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="pricing" className="py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <Badge variant="outline" className="mb-4 border-emerald-500/40 bg-emerald-500/10 text-emerald-300">
+                Тарифы
+              </Badge>
+              <h2 className="mb-6 text-4xl font-bold text-white sm:text-5xl">
+                Начните бесплатно, растите вместе с нами
+              </h2>
+              <p className="text-lg text-slate-400">
+                Выберите план, который подходит именно вам
+              </p>
+            </div>
+
+            <div className="mx-auto mt-16 grid max-w-6xl gap-8 lg:grid-cols-3">
+              {pricing.map((plan) => (
+                <Card
+                  key={plan.name}
+                  className={`relative border-white/10 bg-slate-900/50 backdrop-blur-sm ${
+                    plan.popular
+                      ? "ring-2 ring-emerald-500/50 shadow-2xl shadow-emerald-500/20"
+                      : ""
+                  }`}
+                >
+                  {plan.popular && (
+                    <div className="absolute -top-4 left-0 right-0 flex justify-center">
+                      <Badge className="bg-emerald-500 text-slate-950 font-semibold shadow-lg">
+                        Популярный
+                      </Badge>
+                    </div>
+                  )}
+                  <CardHeader>
+                    <CardTitle className="text-2xl text-white">{plan.name}</CardTitle>
+                    <div className="mt-4 flex items-baseline gap-2">
+                      <span className="text-5xl font-bold text-white">{plan.price}</span>
+                      {plan.period && <span className="text-slate-400">{plan.period}</span>}
+                    </div>
+                    <CardDescription className="mt-2 text-slate-400">
+                      {plan.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Link href="/register">
+                      <Button
+                        className={`mb-8 w-full ${
+                          plan.popular
+                            ? "bg-emerald-500 hover:bg-emerald-400"
+                            : "bg-slate-800 hover:bg-slate-700"
+                        }`}
+                      >
+                        Начать
+                      </Button>
+                    </Link>
+                    <ul className="space-y-3">
+                      {plan.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-3 text-slate-300">
+                          <Check className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />
+                          <span className="text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-white/5 bg-gradient-to-br from-emerald-500/10 via-slate-900/50 to-cyan-500/10 py-24">
+          <div className="mx-auto max-w-4xl px-6 text-center lg:px-8">
+            <h2 className="mb-6 text-4xl font-bold text-white sm:text-5xl">
+              Готовы создать свой первый проект?
+            </h2>
+            <p className="mb-10 text-xl text-slate-300">
+              Присоединяйтесь к тысячам создателей, которые уже строят будущее без кода
+            </p>
+            <form className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row">
+              <div className="flex-1">
                 <Label htmlFor="email" className="sr-only">
                   Email
                 </Label>
-                <Input id="email" placeholder="komanda@biveki.ru" type="email" required />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="ваш@email.com"
+                  className="h-12 border-white/20 bg-slate-900/50 text-white placeholder:text-slate-500"
+                  required
+                />
               </div>
-              <Button type="submit" className="whitespace-nowrap">
-                Получить инвайт
-              </Button>
+              <Link href="/register" className="shrink-0">
+                <Button type="button" size="lg" className="h-12 w-full bg-emerald-500 px-8 hover:bg-emerald-400 sm:w-auto">
+                  Начать бесплатно
+                </Button>
+              </Link>
             </form>
+            <p className="mt-6 text-sm text-slate-500">
+              Бесплатный план — навсегда бесплатно
+            </p>
           </div>
         </section>
       </main>
 
-      <footer className="relative border-t border-slate-900/60 bg-slate-950/80 py-10">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-12">
-          <span>
-            © {new Date().getFullYear()} WebFlow Studio. Разработка веб-приложений {" "}
-            <a
-              href="https://biveki.ru"
-              className="text-slate-300 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Biveki
-            </a>
-            .
-          </span>
-          <div className="flex items-center gap-4">
-            <span>Политика конфиденциальности</span>
-            <span>Условия использования</span>
-            <span>Статус сервиса</span>
+      <footer className="border-t border-white/5 bg-slate-950/50 py-12 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <div className="mb-4 flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-emerald-400" />
+                <span className="font-bold text-white">WebFlow Studio</span>
+              </div>
+              <p className="text-sm text-slate-400">
+                Визуальная платформа для создания функциональных веб-приложений без кода
+              </p>
+            </div>
+
+            <div>
+              <h3 className="mb-4 font-semibold text-white">Продукт</h3>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li>
+                  <Link href="#features" className="transition-colors hover:text-white">
+                    Возможности
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#how-it-works" className="transition-colors hover:text-white">
+                    Как работает
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#pricing" className="transition-colors hover:text-white">
+                    Тарифы
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/register" className="transition-colors hover:text-white">
+                    Начать бесплатно
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="mb-4 font-semibold text-white">Поддержка</h3>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li>
+                  <Link href="#" className="transition-colors hover:text-white">
+                    Документация
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="transition-colors hover:text-white">
+                    Связаться с нами
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="https://biveki.ru"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="transition-colors hover:text-white"
+                  >
+                    О компании Biveki
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="mb-4 font-semibold text-white">Юридическое</h3>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li>
+                  <Link href="#" className="transition-colors hover:text-white">
+                    Политика конфиденциальности
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="transition-colors hover:text-white">
+                    Условия использования
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="transition-colors hover:text-white">
+                    Договор оферты
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-8 border-t border-white/5 pt-8 text-center text-sm text-slate-500">
+            <p>
+              © {new Date().getFullYear()} WebFlow Studio. Разработано{" "}
+              <a
+                href="https://biveki.ru"
+                className="text-emerald-400 transition-colors hover:text-emerald-300"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Biveki
+              </a>
+            </p>
           </div>
         </div>
       </footer>

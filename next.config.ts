@@ -1,7 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Standalone output для Docker
+  output: "standalone",
+
+  // Оптимизация для production
+  reactStrictMode: true,
+
+  // Разрешаем внешние изображения (добавьте ваши домены)
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -17,62 +17,67 @@ export default async function LoginPage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-6 py-12">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.18),_transparent_55%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.12),_transparent_60%)]" />
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 py-20 lg:flex-row lg:items-center lg:gap-24">
-        <div className="flex-1 space-y-8 text-left">
+
+      <Link
+        href="/"
+        className="absolute left-6 top-6 z-10 flex items-center gap-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+      >
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        На главную
+      </Link>
+
+      <div className="relative z-10 w-full max-w-md space-y-8">
+        <div className="space-y-4 text-center">
           <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-200">
-            WebFlow Studio · Sign in
+            WebFlow Studio
           </Badge>
-          <div className="space-y-4">
-            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Синхронизируйтесь с командой и продолжайте сборку.
-            </h1>
-            <p className="max-w-xl text-lg text-slate-300">
-              Авторизуйтесь, чтобы управлять проектами, подключать данные и публиковать фичи напрямую в WebFlow Studio.
-            </p>
-          </div>
-          <div className="grid gap-3 rounded-3xl border border-slate-800/60 bg-slate-950/70 p-6 text-sm text-slate-300">
-            <div className="flex items-start gap-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-              <span>Доступ к Canvas и совместным сессиям команды в реальном времени.</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-sky-400" />
-              <span>Синхронизация с GitHub, Vercel и Storybook без выходов из Studio.</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-              <span>Все обсуждения, ревью и статусы задач остаются в рамках одного рабочего пространства.</span>
-            </div>
-          </div>
+          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Войдите в аккаунт
+          </h1>
+          <p className="text-base text-slate-400">
+            Продолжайте управлять проектами и публиковать фичи
+          </p>
         </div>
 
-        <div className="flex w-full max-w-md flex-col gap-6">
-          <AuthForm action={loginAction} initialState={defaultAuthState} submitLabel="Войти в аккаунт">
-            <AuthFormField
-              label="Email"
-              name="email"
-              type="email"
-              placeholder="team@company.ru"
-              autoComplete="email"
-              required
-            />
-            <AuthFormField
-              label="Пароль"
-              name="password"
-              type="password"
-              placeholder="Введите пароль"
-              autoComplete="current-password"
-              required
-            />
-          </AuthForm>
-          <p className="text-center text-sm text-slate-400">
+        <AuthForm action={loginAction} initialState={defaultAuthState} submitLabel="Войти в аккаунт">
+          <AuthFormField
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="team@company.ru"
+            autoComplete="email"
+            required
+          />
+          <AuthFormField
+            label="Пароль"
+            name="password"
+            type="password"
+            placeholder="Введите пароль"
+            autoComplete="current-password"
+            required
+          />
+        </AuthForm>
+
+        <div className="space-y-4 text-center">
+          <p className="text-sm text-slate-400">
             Нет аккаунта?{" "}
-            <Link className="text-emerald-300 hover:text-emerald-200" href="/register">
+            <Link className="font-medium text-emerald-400 transition-colors hover:text-emerald-300" href="/register">
               Создайте команду
             </Link>
           </p>
+          <div className="flex items-center justify-center gap-6 text-xs text-slate-500">
+            <Link href="#" className="transition-colors hover:text-slate-300">
+              Забыли пароль?
+            </Link>
+            <span>•</span>
+            <Link href="#" className="transition-colors hover:text-slate-300">
+              Поддержка
+            </Link>
+          </div>
         </div>
       </div>
     </main>
