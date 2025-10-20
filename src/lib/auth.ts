@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 const SESSION_COOKIE_NAME = "wfs_session";
-const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days in seconds
+const SESSION_MAX_AGE = 60 * 60 * 24 * 30; // 30 days in seconds
 
 export type PublicUser = {
   id: string;
@@ -43,10 +43,11 @@ async function createSession(userId: string) {
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE_NAME, sessionId, {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "strict",
     secure: process.env.NODE_ENV === "production",
     path: "/",
     expires: expiresAt,
+    priority: "high",
   });
 }
 
@@ -149,12 +150,12 @@ export async function getCurrentUser(): Promise<PublicUser | null> {
   });
 
   if (!session) {
-    cookieStore.delete(SESSION_COOKIE_NAME);
+    // Cannot delete cookie in Server Component - will be cleaned up on next login
     return null;
   }
 
   if (session.expiresAt < new Date()) {
-    await destroySession(session.id);
+    // Cannot delete cookie in Server Component - expired session is already invalid
     return null;
   }
 

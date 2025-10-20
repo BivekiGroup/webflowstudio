@@ -5,6 +5,7 @@ import { defaultAuthState } from "../auth-state";
 import { AuthForm, AuthFormField } from "../components/auth-form";
 import { Badge } from "@/components/ui/badge";
 import { getCurrentUser } from "@/lib/auth";
+import { DesktopOnlyWrapper } from "@/components/desktop-only-wrapper";
 
 export const metadata = {
   title: "Войти в WebFlow Studio",
@@ -17,7 +18,8 @@ export default async function LoginPage() {
   }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-6 py-12">
+    <DesktopOnlyWrapper>
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-6 py-12">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.18),_transparent_55%),_radial-gradient(circle_at_bottom,_rgba(59,130,246,0.12),_transparent_60%)]" />
 
       <Link
@@ -81,5 +83,6 @@ export default async function LoginPage() {
         </div>
       </div>
     </main>
+    </DesktopOnlyWrapper>
   );
 }

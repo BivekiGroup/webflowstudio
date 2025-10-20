@@ -124,6 +124,15 @@
 - shadcn/ui компоненты
 - Полная конфигурация проекта
 
+![Export Page](docs/screenshots/15-export-page.png)
+*Страница экспорта с выбором формата*
+
+![Exported Code](docs/screenshots/17-export-react-code.png)
+*Пример сгенерированного React компонента*
+
+![Final Result](docs/screenshots/20-final-result.png)
+*Финальный результат в браузере*
+
 ### 5. Аутентификация и управление проектами
 
 **Custom Authentication:**
@@ -137,6 +146,15 @@
 - Уникальные slug для каждого проекта
 - Статусы: In Progress, Demo, Preparation
 - Метрики проектов
+
+![Login Page](docs/screenshots/03-login.png)
+*Страница входа в систему*
+
+![Dashboard](docs/screenshots/04-dashboard.png)
+*Dashboard со списком проектов*
+
+![Create Project](docs/screenshots/05-create-project-modal.png)
+*Модальное окно создания нового проекта*
 
 ### 6. Sharing и Embed
 
@@ -451,6 +469,78 @@ User Action → Server Action → Prisma → PostgreSQL
 - Использование data binding (%)
 - Формат экспорта (HTML vs React vs Next.js)
 - Конверсия регистрация → создание проекта
+
+---
+
+## Визуальная демонстрация
+
+Полная галерея скриншотов платформы для презентации.
+
+### Аутентификация
+
+| Регистрация | Вход |
+|-------------|------|
+| ![Register](docs/screenshots/02-register.png) | ![Login](docs/screenshots/03-login.png) |
+
+### Dashboard и управление проектами
+
+![Dashboard с проектами](docs/screenshots/04-dashboard.png)
+*Главная панель с карточками проектов*
+
+![Создание проекта](docs/screenshots/05-create-project-modal.png)
+*Форма создания нового проекта*
+
+### Studio Workspace
+
+![Пустой canvas](docs/screenshots/06-studio-empty.png)
+*Пустой canvas при начале работы*
+
+![Canvas с блоками](docs/screenshots/07-studio-with-blocks.png)
+*Рабочая область с несколькими блоками*
+
+![Drag & Drop](docs/screenshots/18-drag-drop.png)
+*Перетаскивание блоков*
+
+### Библиотека блоков и Inspector
+
+![Библиотека блоков](docs/screenshots/08-blocks-library.png)
+*Sheet с библиотекой всех доступных блоков*
+
+![Inspector](docs/screenshots/09-inspector-panel.png)
+*Панель настройки свойств выбранного блока*
+
+### Работа с данными
+
+![Data Sources](docs/screenshots/10-data-sources.png)
+*Панель управления источниками данных*
+
+![Создание Data Source](docs/screenshots/11-create-data-source.png)
+*Форма создания нового источника данных*
+
+![Data Binding](docs/screenshots/12-data-binding.png)
+*Привязка данных к блоку*
+
+![Field Mapping](docs/screenshots/13-field-mapping.png)
+*Редактор маппинга полей*
+
+### Preview и Export
+
+![Preview](docs/screenshots/14-preview.png)
+*Режим предпросмотра финального результата*
+
+![Export Page](docs/screenshots/15-export-page.png)
+*Страница экспорта с выбором формата*
+
+### Сгенерированный код
+
+| HTML | React |
+|------|-------|
+| ![HTML Code](docs/screenshots/16-export-html-code.png) | ![React Code](docs/screenshots/17-export-react-code.png) |
+
+### Финальный результат
+
+![Финальная страница](docs/screenshots/20-final-result.png)
+*Экспортированная страница работает в браузере без редактора*
 
 ---
 

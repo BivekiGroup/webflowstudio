@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { loginUser, logoutUser, registerUser } from "@/lib/auth";
 import type { AuthFormState } from "./auth-state";
 
@@ -23,6 +24,7 @@ export async function registerAction(
     return { status: "error", message: result.error };
   }
 
+  revalidatePath("/dashboard", "layout");
   redirect("/dashboard");
 }
 
@@ -38,6 +40,7 @@ export async function loginAction(
     return { status: "error", message: result.error };
   }
 
+  revalidatePath("/dashboard", "layout");
   redirect("/dashboard");
 }
 

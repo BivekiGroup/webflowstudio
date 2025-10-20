@@ -173,12 +173,12 @@ export default async function Home() {
       <div className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
 
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-6 w-6 text-emerald-400" />
-              <span className="text-xl font-bold text-white">WebFlow Studio</span>
-              <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-300">
+        <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
+              <span className="text-base sm:text-xl font-bold text-white whitespace-nowrap">WebFlow Studio</span>
+              <Badge variant="outline" className="hidden xs:inline-flex border-emerald-500/40 bg-emerald-500/10 text-emerald-300 text-xs px-1.5 py-0.5">
                 Beta
               </Badge>
             </div>
@@ -187,13 +187,13 @@ export default async function Home() {
               href="https://biveki.ru"
               target="_blank"
               rel="noreferrer"
-              className="hidden text-sm text-slate-400 transition-colors hover:text-slate-300 sm:block"
+              className="hidden text-xs sm:text-sm text-slate-400 transition-colors hover:text-slate-300 sm:block"
             >
               by <span className="font-medium text-slate-300">Biveki</span>
             </a>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 sm:gap-6">
             <div className="hidden items-center gap-6 text-sm font-medium text-slate-300 md:flex">
               <Link className="transition-colors hover:text-white" href="#features">
                 Возможности
@@ -206,31 +206,33 @@ export default async function Home() {
               </Link>
             </div>
 
-            <div className="h-6 w-px bg-white/10" />
+            <div className="hidden sm:block h-6 w-px bg-white/10" />
 
             {user ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <Link href="/dashboard">
-                  <Button variant="outline" size="sm" className="border-slate-700 hover:bg-slate-800">
-                    Панель управления
+                  <Button variant="outline" size="sm" className="border-slate-700 hover:bg-slate-800 h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm">
+                    <span className="hidden sm:inline">Панель управления</span>
+                    <span className="sm:hidden">Панель</span>
                   </Button>
                 </Link>
-                <form action={logoutAction}>
+                <form action={logoutAction} className="hidden sm:block">
                   <Button type="submit" variant="ghost" size="sm" className="text-slate-300 hover:text-white">
                     Выйти
                   </Button>
                 </form>
               </div>
             ) : (
-              <div className="flex items-center gap-3">
-                <Link href="/login">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Link href="/login" className="hidden sm:block">
                   <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white">
                     Войти
                   </Button>
                 </Link>
                 <Link href="/register">
-                  <Button size="sm" className="bg-emerald-500 hover:bg-emerald-400">
-                    Начать бесплатно
+                  <Button size="sm" className="bg-emerald-500 hover:bg-emerald-400 h-8 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm whitespace-nowrap">
+                    <span className="hidden sm:inline">Начать бесплатно</span>
+                    <span className="sm:hidden">Начать</span>
                   </Button>
                 </Link>
               </div>
@@ -240,39 +242,41 @@ export default async function Home() {
       </nav>
 
       <main className="relative">
-        <section className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:py-32 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
-            <Badge variant="outline" className="mb-8 border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-emerald-300">
-              <Wand2 className="mr-2 inline h-3.5 w-3.5" />
-              Визуальная разработка нового поколения
+            <Badge variant="outline" className="mb-6 sm:mb-8 border-emerald-500/40 bg-emerald-500/10 px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm text-emerald-300">
+              <Wand2 className="mr-1.5 sm:mr-2 inline h-3 w-3 sm:h-3.5 sm:w-3.5" />
+              <span className="hidden xs:inline">Визуальная разработка нового поколения</span>
+              <span className="xs:hidden">Визуальная разработка</span>
             </Badge>
 
-            <h1 className="mb-8 bg-gradient-to-br from-white via-white to-white/60 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl lg:text-7xl">
+            <h1 className="mb-6 sm:mb-8 bg-gradient-to-br from-white via-white to-white/60 bg-clip-text text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-transparent">
               Создавайте функциональные сайты
               <span className="block bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text">без написания кода</span>
             </h1>
 
-            <p className="mb-12 text-xl leading-relaxed text-slate-300 sm:text-2xl">
+            <p className="mb-8 sm:mb-12 text-base sm:text-xl lg:text-2xl leading-relaxed text-slate-300 px-4 sm:px-0">
               Визуальный редактор для дизайна + блок-схемы для логики.
-              <br />
+              <br className="hidden sm:block" />
+              <span className="sm:hidden"> </span>
               Привязывайте бэкенд или используйте встроенную базу данных.
             </p>
 
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link href="/register">
-                <Button size="lg" className="h-12 bg-emerald-500 px-8 text-base hover:bg-emerald-400">
+            <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row w-full sm:w-auto px-4 sm:px-0">
+              <Link href="/register" className="w-full sm:w-auto">
+                <Button size="lg" className="h-11 sm:h-12 w-full sm:w-auto bg-emerald-500 px-6 sm:px-8 text-sm sm:text-base hover:bg-emerald-400">
                   Начать бесплатно
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </Link>
-              <Link href="#how-it-works">
-                <Button size="lg" variant="outline" className="h-12 border-slate-700 px-8 text-base hover:bg-slate-800">
+              <Link href="#how-it-works" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="h-11 sm:h-12 w-full sm:w-auto border-slate-700 px-6 sm:px-8 text-sm sm:text-base hover:bg-slate-800">
                   Как это работает
                 </Button>
               </Link>
             </div>
 
-            <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-slate-400">
+            <div className="mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-slate-400 px-4">
               <div className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" />
                 Готов за 5 минут
@@ -606,17 +610,17 @@ export default async function Home() {
               <h3 className="mb-4 font-semibold text-white">Юридическое</h3>
               <ul className="space-y-2 text-sm text-slate-400">
                 <li>
-                  <Link href="#" className="transition-colors hover:text-white">
+                  <Link href="/privacy" className="transition-colors hover:text-white">
                     Политика конфиденциальности
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="transition-colors hover:text-white">
+                  <Link href="/terms" className="transition-colors hover:text-white">
                     Условия использования
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="transition-colors hover:text-white">
+                  <Link href="/offer" className="transition-colors hover:text-white">
                     Договор оферты
                   </Link>
                 </li>
